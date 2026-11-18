@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HỌC LIỆU SỐ MÔN TIẾNG ANH - TRƯỜNG THPT GIA VIỄN B - GIÁO VIÊN: HUỆ ANH</title>
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--ink:#1d2433;--muted:#5d6779;--line:#dde3ee;--pri:#1f4e9c;--pri2:#2f6fd6;--priSoft:#e8f0fd;--shadow:0 2px 12px rgba(20,40,80,.08)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Arial,Helvetica,sans-serif;font-size:15px;line-height:1.55}
+header{position:sticky;top:0;z-index:10;background:linear-gradient(90deg,#163a78,#1f4e9c 55%,#2f6fd6);color:#fff;box-shadow:0 2px 12px rgba(0,0,0,.18)}
+.hwrap{max-width:1100px;margin:0 auto;padding:12px 16px}
+h1{margin:0;font-size:19px;letter-spacing:.3px}
+.credit{font-size:13px;opacity:.92;margin-top:2px}
+.credit b{color:#ffe082}
+main{max-width:1100px;margin:0 auto;padding:20px 16px}
+.intro{background:var(--card);border-radius:14px;padding:16px 20px;box-shadow:var(--shadow);margin-bottom:18px}
+.intro h2{margin:0 0 4px;font-size:17px;color:var(--pri)}
+.intro p{margin:0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.res{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;transition:.15s}
+.res:hover{border-color:var(--pri2);transform:translateY(-2px)}
+.res .ic{font-size:34px;line-height:1}
+.res .tag{align-self:flex-start;background:var(--priSoft);color:var(--pri);font-size:12px;font-weight:700;border-radius:99px;padding:2px 10px}
+.res h3{margin:0;font-size:16.5px;color:var(--ink)}
+.res p{margin:0;color:var(--muted);font-size:14px;flex:1}
+.res .last{font-size:12px;color:#1e8e4f;min-height:16px}
+.go{display:inline-block;text-align:center;background:var(--pri);color:#fff;text-decoration:none;font-weight:700;border-radius:10px;padding:10px 14px}
+.go:hover{background:var(--pri2)}
+.res.off{opacity:.75}.go.dis{background:#c9d1de;cursor:not-allowed}.note{font-size:11.5px;color:#c0392b;font-weight:700;background:#fdecea;border-radius:6px;padding:1px 7px;vertical-align:2px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:24px 16px 32px}
+footer b{color:var(--pri)}
+@media(max-width:520px){h1{font-size:16px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="hwrap">
+  <h1>📚 HỌC LIỆU SỐ MÔN TIẾNG ANH - TRƯỜNG THPT GIA VIỄN B</h1>
+  <div class="credit">Giáo viên: <b>Huệ Anh</b> • Ôn thi TN THPT theo Chương trình GDPT 2018</div>
+</div></header>
+
+<main>
+  <div class="intro">
+    <h2>Chào mừng các em!</h2>
+    <p>Chọn một bài học bên dưới để bắt đầu luyện tập. Trong mỗi bài đều có nút <b>🏠 Học liệu số</b>, <b>📂 Chuyển bài</b> và <b>↩ Quay lại</b> ở góc dưới bên trái để các em chuyển qua lại giữa các bài.</p>
+  </div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>© Trường THPT Gia Viễn B • Giáo viên: <b>Huệ Anh</b><br>Học liệu số môn Tiếng Anh – Chương trình GDPT 2018</footer>
+
+<script>window.HLS_IS_HUB=true;</script>
+<script src="nav.js"></script>
+<script>
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+let visits={};try{visits=JSON.parse(localStorage.getItem("khl_visits")||"{}")}catch(e){}
+const R=window.HLS_RESOURCES||[];
+document.getElementById("grid").innerHTML=R.map(r=>`
+  <div class="res${r.url?"":" off"}">
+    <div class="ic">${r.icon}</div>
+    <span class="tag">${esc(r.tag)}</span>
+    <h3>${esc(r.title)}${r.note?` <span class="note">${esc(r.note)}</span>`:""}</h3>
+    <p>${esc(r.desc)}</p>
+    <div class="last">${r.url&&visits[r.url]?"✔ Lần mở gần nhất: "+esc(visits[r.url]):""}</div>
+    ${r.url?`<a class="go" href="${esc(r.url)}">▶ Vào học</a>`:`<span class="go dis">⏳ Đang cập nhật</span>`}
+  </div>`).join("");
+document.getElementById("grid").addEventListener("click",e=>{
+  const a=e.target.closest("a.go");if(!a)return;
+  try{visits[a.getAttribute("href")]=new Date().toLocaleString("vi-VN");localStorage.setItem("khl_visits",JSON.stringify(visits))}catch(err){}
+});
+</script>
+</body>
+</html>
